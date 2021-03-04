@@ -1,4 +1,4 @@
-import cv2
+import cv2,os
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -15,11 +15,12 @@ def plot_results(pil_img,boxes,labels):
         ax.text(xmin, ymin, __CLASSES__[label], fontsize=15,bbox=dict(facecolor='yellow', alpha=0.5))
     plt.show()
 
-train_set_dir = 'CUG_Hand/training_dataset.npy'
-test_set_dir = 'CUG_Hand/testing_dataset.npy'
+ROOT = 'CUG_Hand'
+train_set_dir = os.path.join(ROOT,'training_dataset.npy')
+test_set_dir = os.path.join(ROOT,'testing_dataset.npy')
 data_train = np.load(train_set_dir, allow_pickle=True)
 data_test = np.load(test_set_dir, allow_pickle=True)
 
 for i,data in enumerate(data_test):
-    image = cv2.imread(data['rgb_dir'])
+    image = cv2.imread(os.path.join(ROOT, data['rgb_dir']))
     plot_results(image,data['boxes'],data['label'])
